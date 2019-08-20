@@ -1,0 +1,52 @@
+#!/usr/bin/bash
+
+# Edit this line so it points to the wine prefix that you use for your game
+prefix="WINEPREFIX=~/mount/.winedisco32dotnet40/"
+wine="~/mount/staging-2.21-x86_64/bin/wine"
+
+acct=$1 # point this at your launcheraccts.xml
+option=$2 # options are list and select
+select=$3 # account number if you're using the select option
+
+	
+# If <select> is "list", we show all the available accounts and which number corresponds to them for selection
+if [ "$option" = "list" ];
+then
+	count=1
+	while read line;
+	do
+		printf "Account #: `echo $count`\n"
+		printf "Account name: `xmlstarlet sel -t -v '//account' -nl $acct | awk 'NR=='$count` \n"
+	
+		printf "Account description: `xmlstarlet sel -t -v '//account/@description' -nl $acct | awk 'NR=='$count` \n\n"
+		((count++))
+	done < $acct
+
+elif [ "$option" = "select" ];
+then
+	if [ -n "$select" ];
+	then
+		# Here we fetch the code and sig for the selected account
+		signature=`xmlstarlet sel -t -v '//account/@signature' -nl $acct | awk 'NR=='$select`
+		code=`xmlstarlet sel -t -v '//account/@code' -nl $acct | awk 'NR=='$select`
+	
+		# Here we create a windows .reg file which contains modified keys for your wine registry, then puts the code and sig we aqcuired above into that key
+		printf "Windows Registry Editor Version 5.00\n\n" > key.reg
+		echo "[HKEY_CURRENT_USER\Software\Microsoft\Microsoft Games\Freelancer\1.0]" >> key.reg # I couldn't get the '\1.' to work in printf so I said fuck it echo
+		printf '"MPAccountName"="'$code'"\n' >> key.reg
+		printf '"MPAccountNameSig"="'$signature'"\n' >> key.reg
+	
+		# Here we execute regedit in your wine prefix you specified earlier, and import the registry key we just created
+		eval "$prefix $wine regedit.exe key.reg > /dev/null 2>&1"
+
+		# Tell the user we did the thing
+		printf "Account number "$select", `xmlstarlet sel -t -v '//account' -nl $acct | awk 'NR=='$select`, set!\n"
+	
+		# Then we delete it because temp files are, well, temporary
+		rm key.reg
+	else
+		printf "No account selected. Please select an account number, you can find out your account numbers by using the \"list\" option\n"
+	fi
+
+fi
+

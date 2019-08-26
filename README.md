@@ -20,10 +20,16 @@ It is important that you modify the script in the following manner:
 `prefix=/home/user/.winedisco`
 - The `wine` line should be the wine executable for wine-staging 2.21, wherever you decided to install that to. It should look like the following:
 `wine=/path/to/staging-2.21-x86_64/bin/wine`
+- The `acct` line should point to your launcheraccounts.xml file. It should look like the following:
+`acct=/path/to/launcheraccounts.xml`
 
 ## Usage
 
-`./launcher <your launcheraccts.xml> <option> <selection>`
+`./launcher <option> <selection>`
 
-- Your options are list and select
+- Your options are list and select (and launch if you've set it up)
 - Selection is the account number, you can find out which account number you need from the list
+
+## Additional functionality
+
+If you have a script to launch the game with, you can also use the launch option to call that script. It's the last if statement if you'd like to put your preferred method for launching the game there.

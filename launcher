@@ -1,12 +1,12 @@
 #!/usr/bin/bash
 
 # Edit this line so it points to the wine prefix that you use for your game
-prefix="WINEPREFIX=~/mount/.winedisco32dotnet40/"
-wine="~/mount/staging-2.21-x86_64/bin/wine"
+prefix="/path/to/.winedisco"
+wine="/path/to/staging-2.21/bin/wine"
+acct="/path/to/launcheraccts.xml"
 
-acct=$1 # point this at your launcheraccts.xml
-option=$2 # options are list and select
-select=$3 # account number if you're using the select option
+option=$1 # options are list and select
+select=$2 # account number if you're using the select option
 
 	
 # If <select> is "list", we show all the available accounts and which number corresponds to them for selection
@@ -48,5 +48,13 @@ then
 		printf "No account selected. Please select an account number, you can find out your account numbers by using the \"list\" option\n"
 	fi
 
+# you can modify this statement so that you can launch the game using the script by using the "launch" option. How you start your game is your business, but you can chuch it here if you'd like.
+elif [ "$option" = "launch" ];
+then
+	.scripts/discovery	
+
+else
+	printf "Hey, you didn't give me an option. What do you want me to do? Your options are: list, select, or launch (but only if you've modified the script to do that)\n"
+	printf "Example usage: ./launcher list, ./launcher select 6, ./launcher launch\n"
 fi
 

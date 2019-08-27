@@ -18,8 +18,8 @@ It is important that you modify the script in the following manner:
 
 - The `prefix` line should point to the wine prefix you use to run the game, otherwise you're modifying the wrong files with this account switcher. It should look like the following:
 `prefix="/home/user/.winedisco"`
-- The `wine` line should be the wine executable for wine-staging 2.21, wherever you decided to install that to. It should look like the following:
-`wine="/path/to/staging-2.21-x86_64/bin/wine"`
+- The `wine` line should be the path to the bin directory for wine-staging 2.21, wherever you decided to install that to. It should look like the following:
+`wine="/path/to/staging-2.21-x86_64/bin/"`
 - The `acct` line should point to your launcheraccounts.xml file. It should look like the following:
 `acct="/path/to/launcheraccounts.xml"`
 

@@ -37,7 +37,7 @@ then
 		printf '"MPAccountNameSig"="'$signature'"\n' >> key.reg
 	
 		# Here we execute regedit in your wine prefix you specified earlier, and import the registry key we just created
-		eval "$prefix $wine regedit.exe key.reg > /dev/null 2>&1"
+		eval "WINEPREFIX=$prefix $wine regedit.exe key.reg > /dev/null 2>&1"
 
 		# Tell the user we did the thing
 		printf "Account number "$select", `xmlstarlet sel -t -v '//account' -nl $acct | awk 'NR=='$select`, set!\n"

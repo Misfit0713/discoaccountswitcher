@@ -2,8 +2,14 @@
 
 # Edit this line so it points to the wine prefix that you use for your game
 prefix="/path/to/.winedisco"
-wine="/path/to/staging-2.21/bin/"
-acct="/path/to/launcheraccts.xml"
+
+# Edit this line so it points to the bin directory of wine-staging 2.21
+wine="/path/to/staging-2.21-x86_64/bin"
+
+# Edit this line so it points to your launcher accounts XML file
+acct="/path/to/launcheraccounts.xml"
+
+#####################################################################################
 
 option=$1 # options are list and select
 select=$2 # account number if you're using the select option
@@ -13,13 +19,13 @@ select=$2 # account number if you're using the select option
 if [ "$option" = "list" ];
 then
 	count=1
-	while read line;
+	while IFS= read -r line;
 	do
 		printf "Account #: `echo $count`\n"
 		printf "Account name: `xmlstarlet sel -t -v '//account' -nl $acct | awk 'NR=='$count` \n"
 	
 		printf "Account description: `xmlstarlet sel -t -v '//account/@description' -nl $acct | awk 'NR=='$count` \n\n"
-		((count++))
+		count=$((count+1))
 	done < $acct
 
 elif [ "$option" = "select" ];
@@ -37,7 +43,7 @@ then
 		printf '"MPAccountNameSig"="'$signature'"\n' >> key.reg
 	
 		# Here we execute regedit in your wine prefix you specified earlier, and import the registry key we just created
-		export PATH="$wine:$PATH"
+		PATH="$wine":$PATH
 		eval "WINEPREFIX=$prefix wine regedit.exe key.reg > /dev/null 2>&1"
 
 		# Tell the user we did the thing

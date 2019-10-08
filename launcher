@@ -19,14 +19,14 @@ select=$2 # account number if you're using the select option
 if [ "$option" = "list" ];
 then
 	count=1
-	while IFS= read -r line;
+	cut -f1 $acct | while IFS= read -r line;
 	do
 		printf "Account #: `echo $count`\n"
 		printf "Account name: `xmlstarlet sel -t -v '//account' -nl $acct | awk 'NR=='$count` \n"
 	
 		printf "Account description: `xmlstarlet sel -t -v '//account/@description' -nl $acct | awk 'NR=='$count` \n\n"
 		count=$((count+1))
-	done < $acct
+	done
 
 elif [ "$option" = "select" ];
 then

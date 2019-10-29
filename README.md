@@ -4,7 +4,6 @@ A small utility to switch your Discovery Freelancer accounts on Linux
 
 ## Requirements
 
-- A shell
 - xmlstarlet
 - Wine
 - A working wine prefix for your discovery install

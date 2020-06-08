@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 # Edit this line so it points to the wine prefix that you use for your game
 prefix="/path/to/.winedisco"

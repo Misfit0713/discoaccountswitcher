@@ -3,9 +3,6 @@
 # Edit this line so it points to the wine prefix that you use for your game
 prefix="/path/to/.winedisco"
 
-# Edit this line so it points to the bin directory of wine-staging 2.21
-wine="/path/to/staging-2.21-x86_64/bin"
-
 # Edit this line so it points to your launcher accounts XML file
 acct="/path/to/launcheraccounts.xml"
 
@@ -43,7 +40,6 @@ then
 		printf '"MPAccountNameSig"="'$signature'"\n' >> key.reg
 	
 		# Here we execute regedit in your wine prefix you specified earlier, and import the registry key we just created
-		PATH="$wine":$PATH
 		eval "WINEPREFIX=$prefix wine regedit.exe key.reg > /dev/null 2>&1"
 
 		# Tell the user we did the thing
@@ -55,13 +51,19 @@ then
 		printf "No account selected. Please select an account number, you can find out your account numbers by using the \"list\" option\n"
 	fi
 
+elif [ $option = "update" ];
+then
+	cd ~/Games/Discovery\ Freelancer\ 4.91.0/
+	WINEPREFIX=$prefix mono DSUpdate.exe
+
 # you can modify this statement so that you can launch the game using the script by using the "launch" option. How you start your game is your business, but you can chuch it here if you'd like.
 elif [ "$option" = "launch" ];
 then
-	.scripts/discovery	
+	cd ~/Games/Discovery\ Freelancer\ 4.91.0/EXE/
+	WINEPREFIX=$prefix wine Freelancer.exe -s95.217.88.9:2302 -logchat -logappend -logtime -noflighttext -dptplayer -newplayer -lag -numdmg -dx -d 1600 -x 900
 
 else
-	printf "Hey, you didn't give me an option. What do you want me to do? Your options are: list, select, or launch (but only if you've modified the script to do that)\n"
+	printf "Hey, you didn't give me an option. What do you want me to do? Your options are: list, select, update, or launch (but only if you've modified the script to do that)\n"
 	printf "Example usage: ./launcher list, ./launcher select 6, ./launcher launch\n"
 fi
 

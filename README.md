@@ -12,7 +12,7 @@ A small utility to switch your Discovery Freelancer accounts on Linux
 
 ## Setup
 
-You need to edit the script so that it points to both your discovery wine prefix (the one with dotnet40 installed) and your path to the wine version you use to run the game (staging 2.21 if you followed my guide)
+You need to edit the script so that it points to your discovery wine prefix and your launcheraccounts.xml file
 
 It is important that you modify the script in the following manner:
 

@@ -60,7 +60,7 @@ then
 elif [ "$option" = "launch" ];
 then
 	cd ~/Games/Discovery\ Freelancer\ 4.91.0/EXE/
-	WINEPREFIX=$prefix wine Freelancer.exe -s95.217.88.9:2302 -logchat -logappend -logtime -noflighttext -dptplayer -newplayer -lag -numdmg -dx -d 1600 -x 900
+	WINEPREFIX=$prefix wine Freelancer.exe -s163.172.117.137:2302 -logchat -logappend -logtime -noflighttext -dptplayer -newplayer -lag -numdmg -dx -d 1600 -x 900
 
 else
 	printf "Hey, you didn't give me an option. What do you want me to do? Your options are: list, select, update, or launch (but only if you've modified the script to do that)\n"
